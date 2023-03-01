@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+Add comment
+{% endblock %}
+{% block content %}
+<h1> comment </h1>
+{% include 'includes/error.html' %}
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+{% include 'includes/form.html' %}
+    <div class="col-md-12 offset-md-6">
+      <button type="submit" class="btn btn-primary">
+        Add
+      </button>
+    </div>
+  </form {% endblock %}>
