@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %} {{ rpt_detail.rpt_name }} ({{ rpt_detail.rpt_process_status.rpt_process_status  }}) {% endblock %}
+{% block content %}
+{% load thumbnail %}
+{% include 'nonconformance/includes/switcher_dcp.html' %}
+{% include 'nonconformance/includes/rptdetail_1.html'%}
+{% endblock %}

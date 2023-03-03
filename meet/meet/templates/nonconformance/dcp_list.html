@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}DCP LIST{% endblock %}
+{% block content %}
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+<br>
+<table class="table table-bordered border-primary"
+  id = "table"
+  data-filter-control="true"
+  data-show-search-clear-button="true">
+    <thead class="thead-dark">
+        <tr>
+        <th data-field=>DCP</th>
+        <th data-field=>PART NUMBER</th>
+        <th scope="col">CURRENT STATUS</th>
+        <th scope="col">REQUEST EVALUATION</th>
+        <th scope="col">DATE</th>
+        <th scope="col">RPT LIST</th>
+        </tr>
+    </thead>
+    <tbody id ="myTable">
+      {% for nn_list in page_obj  %}
+      <tr>
+        <td><a href="{% url 'nonconformance:dcp_detail' nn_list.id %}">
+            {{ nn_list.nn_name }}</a>
+        </td>
+        <td>{% for part in nn_list.part_number.all %} 
+          <li>{{ part.title }}</li>
+              {% endfor %}
+        </td>
+        <td>{{ nn_list.nn_status.nn_status }}</td>
+        <td>{{nn_list.request_evaluation}}
+        <td>{{ nn_list.applicant_date }}
+        </td>
+        <td>
+          {% for rpt in rpt_list %}
+            {% if rpt.dcp_id == nn_list.id %}
+            <a href="{% url 'nonconformance:rpt_detail' rpt.id %}">
+              {{ rpt.rpt_name }} {{ rpt.rpt_process_status.rpt_process_status }} {{ rpt.dispatched_to | linebreaks }}
+            {% endif %}
+          {% endfor %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+{% include 'nonconformance/includes/paginator.html' %}
+{% endblock %}
+
+<script>
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  </script>
+
+<script>
+  $(function() {
+    $('#table').bootstrapTable()
+  })
+</script>

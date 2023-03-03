@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+<h1>{% block title %} USER PROFILE: {{ author }} {% endblock %}</h1>
+{% block content %}
+{% load thumbnail %}
+  <div class="container py-5">
+    <div class="mb-5"><table class="table table-bordered border-primary">
+      <h2> List of {{ author.get_full_name }}'s tasks </h2>
+      <thead class="thead-dark">
+          <tr>
+          <th scope="col">EVENT ROOT</th>
+          <th scope="col">TOW</th>
+          <th scope="col">SIQ</th>
+          <th scope="col">ITEM</th>
+          <th scope="col">NOTE</th>
+          <th scope="col">DATE</th>
+          <th scope="col">PERSON</th>
+          <th scope="col">DUE DATE</th>
+          <th scope="col">STATUS</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tasks_list in page_obj  %}
+          <tr class='warning'>
+            <td><a href="{% url 'posts:task_detail' tasks_list.id %}">
+                {{ tasks_list.event_root}}</a>
+            </td>
+            <td>{{ tasks_list.tow.tow_name }}</td>
+            <td>{{ tasks_list.siq }}</td>
+            <td>
+              {{ tasks_list.item.name }}
+            </td>
+            <td>{{ tasks_list.text }}</td>
+            <td>{{ tasks_list.date }}</td>
+            <td>{{ tasks_list.person }}</td>
+            <td>{{ tasks_list.completed_date }}</td>
+            <td>{{ tasks_list.status.task_status_description }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+      </thead>
+      
+      {% if user.name == author %}
+        <a
+          class="btn btn-lg btn btn-primary"
+          href="{% url 'posts:post_create' %}" role="button"
+        >
+          Create post
+        </a>
+      {% endif %}
+  {% include 'posts/includes/paginator.html' %}
+{% endblock %}

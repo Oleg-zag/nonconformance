@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load user_filters %}
+<article>
+  {% block title %} Task: {{ task.event_root }}_{{ task.tow }}_{{ task.siq }} {% endblock %}
+</article>
+{% block content %}
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+<br>
+  <div class="table-responsive">
+    <table class="table table-bordered border-primary"
+    id = "table"
+    data-filter-control="true"
+    data-show-search-clear-button="true">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">ACTION</th>
+            <th scope="col">ATTACHMENTS</th>
+            <th scope="col">NOTE</th>
+            <th scope="col">DATE</th>
+            <th scope="col">PERSON</th>
+            <th scope="col">DUE DATE</th>
+            <th scope="col">STATUS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for  task_detail in  task_detail  %}
+          <tr>
+            <td><a href="{% url 'posts:action_list' task_detail.action_id %}">
+                {{ task_detail.action.name}} </a>
+            </td>
+            <td>
+              {% if task_detail.image != "" %}
+              <a href = "{{ task_detail.image.url }}">
+                download </a>
+                {% endif %}
+            </td>
+            <td>{{ task_detail.text }}</td>
+            <td>{{ task_detail.date }}</td>
+            <td>
+              {{ task_detail.person }}</td>
+            <td>{{ task_detail.completed_date }}</td>
+            <td>{{ task_detail.status.task_status_description }}</td>
+          </tr>
+          {% endfor %} 
+    </table>
+    <a href="{% url 'posts:tasks_edit' task.id %}">
+        <button type="submit" class="btn btn-primary">Edit</button>
+    </a>
+  </div>
+{% endblock %}
+
+<script>
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  </script>
+
+<script>
+  $(function() {
+    $('#table').bootstrapTable()
+  })
+</script>

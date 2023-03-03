@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}JOB CARD LIST{% endblock %}
+{% block content %}
+{% load thumbnail %}
+{% include 'posts/includes/switcher_item_msn.html' %} 
+{% include 'posts/includes/item_card.html' %}
+<h5> READY TO WORK: {{ ready_to_work }}</h5>
+<h5> IN WORK: {{ in_work }}</h5>
+<h5> READY FOR CHECK: {{ ready_for_check }}</h5>
+<h5> ON HOLD: {{ on_hold }}</h5>
+<h5> IN CHECK: {{ in_check }}</h5>
+<h5> CHECKED: {{ checked }}</h5>
+<h5> RELEASED: {{ released }}</h5>
+<h5> CANCELLED: {{ cancelled }}</h5>
+<h5> TOTALL: {{ total }}</h5>
+{% endblock %}

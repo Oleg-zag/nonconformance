@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}TASK LIST{% endblock %}
+{% block content %}
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+<br>
+<table class="table table-bordered border-primary"
+  id = "table"
+  data-filter-control="true"
+  data-show-search-clear-button="true">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col">EVENT ROOT</th>
+        <th scope="col">TOW</th>
+        <th scope="col">SIQ</th>
+        <th scope="col">ITEM</th>
+        <th scope="col">NOTE</th>
+        <th scope="col">DATE</th>
+        <th scope="col">PERSON</th>
+        <th scope="col">DUE DATE</th>
+        <th scope="col">STATUS</th>
+        </tr>
+    </thead>
+    <tbody id ="myTable">
+      {% for tasks in items_tasks  %}
+      <tr>
+        <td><a href="{% url 'posts:task_detail' tasks.id %}">
+            {{ tasks.event_root}}</a>
+        </td>
+        <td>{{ tasks.tow.tow_name }}</td>
+        <td>{{ tasks.siq }}</td>
+        <td>{{ tasks.item.name }}</td>
+        <td>{{ tasks.text }}</td>
+        <td>{{ tasks.date }}</td>
+        <td>{{ tasks.person }}</td>
+        <td>{{ tasks.completed_date }}</td>
+        <td>{{ tasks.status.task_status_description }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+<script>
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  </script>
+
+<script>
+  $(function() {
+    $('#table').bootstrapTable()
+  })
+</script>

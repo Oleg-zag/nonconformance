@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+<main>
+  {% include 'includes/header.html' %}
+  <div class="row justify-content-center">
+        {% block content %}
+        {% endblock %}
+  </div> <!-- card body -->
+  {% include 'includes/footer.html' %}
+</main>
+
+<script>
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  </script>
+
+  <script>
+    $(function() {
+      $('#table').bootstrapTable()
+    })
+  </script>
