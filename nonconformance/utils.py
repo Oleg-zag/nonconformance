@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 
+
 POSTS_PAR_PAGE = 200
 
 

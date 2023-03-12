@@ -467,7 +467,6 @@ class OtherRerason(models.Model):
         blank=True,
         null=True,
     )
-    slug = models.SlugField(unique=False)
     dcp = models.CharField(
         max_length=20,
         blank=True,

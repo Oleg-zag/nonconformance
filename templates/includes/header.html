@@ -1,4 +1,5 @@
 {% load static %}
+{% load cache %}
 <!DOCTYPE html>
 <html lang="en">
 <header>
@@ -180,4 +181,33 @@
       </ul>
     </div>
   </nav>
+  {% cache 600 navbar %}
+  <nav class="navbar navbar-light" style="background-color: orange">
+    <div class="container-fluid"> 
+      <ul class="nav nav-pills"> 
+        <div class='card'>
+        <li class="nav-item">
+          <img src="{% static 'img/dirham_o73cttces50f_32.png' %}" width="30" height="30" class="d-inline-block align-top" alt=""> <b> {{ currency_aed }}</b>
+        </li>
+      </div>
+      <div class='card'>
+        <li class="nav-item">
+          <img src="{% static 'img/yuan_4mmhxvmmutfn_32.png' %}" width="30" height="30" class="d-inline-block align-top" alt=""> <b> {{ currency_cnr }}</b>
+        </li>
+      </div>
+      <div class='card'>
+        <li class="nav-item">
+          <img src="{% static 'img/dollar_p958k4k9mxc5_32.png' %}" width="30" height="30" class="d-inline-block align-top" alt=""> <b> {{ currency_usd }}</b>
+        </li>
+      </div>
+      <div class='card'>
+        <li class="nav-item">
+          <img src="{% static 'img/evro_xgst0mbsgxpi_32.png' %}" width="30" height="30" class="d-inline-block align-top" alt=""> <b> {{ currency_eur }}</b>
+        </li>
+      </div>
+      </div>
+      </ul>
+    </div>
+  </nav>  
+  {% endcache %}
 </header>

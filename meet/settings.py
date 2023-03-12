@@ -24,7 +24,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^qy@+(pzq%**uu1s*6nvs*rn0qwv#vs&p=&f-uaj17$+_x@x5)'
-
+OPENEXCHANGERATES_APP_ID = "70aa4cb8daea495a8fcc8cdc4d9bb3ae"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'datetimepicker',
     'import_export',
     'sorl.thumbnail',
+    'schedule',
+    'django_celery_beat',
+
 ]
 
 MIDDLEWARE = [
@@ -67,6 +70,7 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'core.context_processor.year.currency',
                 'core.context_processor.year.year',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -163,3 +167,10 @@ DATE_INPUT_FORMATS = [
     '%d %B, %Y',  # '25 October, 2006'
     '%d.%m.%Y',
 ]
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+BROKER_URL = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+CELERY_RESULT_BACKEND = 'redis://' + REDIS_HOST + ':' + REDIS_PORT + '/0'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'

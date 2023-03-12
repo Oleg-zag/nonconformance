@@ -572,3 +572,27 @@ class ReportMsn0000(models.Model):
 
     def __str__(self):
         return self.item.name
+
+
+class Currency(models.Model):
+    currency_usd = models.CharField(
+        max_length=6,
+        blank=True,
+        null=True,
+    )
+    currency_aed = models.CharField(
+        max_length=6,
+        blank=True,
+        null=True,
+    )
+    currency_eur = models.CharField(
+        max_length=6,
+        blank=True,
+        null=True,
+    )
+    currency_cnr = models.CharField(
+        max_length=6,
+        blank=True,
+        null=True,
+    )
+

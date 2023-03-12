@@ -7,18 +7,16 @@ from django.utils import timezone
 
 from posts.constant import (CM, DE, DOEPSEWIS, DOFS, DOMP, DOPWD, DOSTR,
                             DOSTRS, HEAD, LEAD, ME, MELEAD, MEMNG, MEPLANER,
-                            OAW, PE, PM, PME, SE, SUPER, TE, VTXPOME, VTXPOMG,
-                            VTXPOMP, VTXPOQA, VTXPOSC,
-                            VTXPOSF, SENTFORDEREVIEW)
+                            OAW, PE, PM, PME, SE, SENTFORDEREVIEW, SUPER, TE,
+                            VTXPOME, VTXPOMG, VTXPOMP, VTXPOQA, VTXPOSC,
+                            VTXPOSF)
 from posts.models import Company, Profile, User
 
 from .forms import (CommentForm, DCPChangeStatusForm, DCPEditForm, DCPForm,
-                    OtherForm,
-                    PRTCreateForm, RPTChangeStatusForm, RPTDEReviewForm, RPTOAWClosureForm)
+                    OtherForm, PRTCreateForm, RPTChangeStatusForm,
+                    RPTDEReviewForm, RPTOAWClosureForm)
 from .models import DCP, RPT, Comment, NNstatus, PRTProcessStatus
 from .utils import apply_paginator
-
-import datetime
 
 
 @login_required
@@ -40,13 +38,28 @@ def dcp_create(request):
         dcp.nn_name = name
         dcp.applicant = Profile.objects.get(user=request.user)
         dcp.nn_status = NNstatus.objects.get(nn_status="INITIATED")
-        if dcp.reason == "Other":
-            redirect('nonconformance:dcp_other_reason', name)
-           # dcp_other_reason(request, name)
         dcp.save()
         form.save_m2m()
-        return redirect('nonconformance:dcp_list')
+        dcp.save()
+        if dcp.reason == "Other":
+            return redirect('nonconformance:dcp_other_reason', name)
+        else:
+            return redirect('nonconformance:dcp_list')
     return render(request, 'nonconformance/create_dcp.html', {'form': form})
+
+
+@login_required
+def dcp_other_reason(request, name):
+    form = OtherForm(
+        request.POST or None,
+        files=request.FILES or None,
+    )
+    if form.is_valid():
+        otherrerason = form.save(commit=False)
+        otherrerason.dcp = name
+        otherrerason.save()
+        return redirect('nonconformance:dcp_list')
+    return render(request, 'nonconformance/dcp_reason_form.html', {'form': form})
 
 
 @login_required
@@ -112,19 +125,6 @@ def dcp_detail(request, dcp_id):
         'dcpflag': 'dcpflag',
     }
     return render(request, 'nonconformance/dcpdetail.html', context)
-
-
-def dcp_other_reason(request, dcp_name):
-    form = OtherForm(
-        request.POST or None,
-        files=request.FILES or None,
-    )
-    if form.is_valid():
-        otherrerason = form.save(commit=False)
-        otherrerason.dcp = dcp_name
-        otherrerason.save()
-        return redirect('nonconformance:dcp_list')
-    return render(request, 'nonconformance/dcp_comment.html', {'form': form})
 
 
 @login_required
@@ -270,3 +270,5 @@ def dcp_relations(request, dcp_id):
         'dcp': 'флажок dcp',
     }
     return render(request, 'nonconformance/dcprelations.html', context)
+
+
