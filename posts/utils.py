@@ -1,7 +1,6 @@
 import time
 
 import requests
-import schedule
 from bs4 import BeautifulSoup
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
