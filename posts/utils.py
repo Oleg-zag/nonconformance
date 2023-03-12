@@ -141,5 +141,3 @@ def currency_value():
         currency_cnr=convert_cny[0].text,
     )
 
-
-schedule.every(1).minutes.do(currency_value)
