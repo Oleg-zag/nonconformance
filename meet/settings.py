@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'datetimepicker',
     'import_export',
     'sorl.thumbnail',
-    'schedule',
     'django_celery_beat',
 
 ]
