@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
-from schedule import every, repeat
+
 
 from .models import Currency, Item, Tasks
 
