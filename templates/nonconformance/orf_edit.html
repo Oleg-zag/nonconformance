@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %} {{ orf_detail.orf_name }}  {% endblock %}
+{% block content %}
+{% load thumbnail %}
+{% include 'nonconformance/includes/switcher_dcp.html' with orfflag=True %}
+{% include 'nonconformance/includes/orf_update.html' %}
+{% endblock %}

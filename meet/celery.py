@@ -9,10 +9,10 @@ app = Celery('meet')
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks()
 app.conf.beat_schedule = {
-    'update_currency': {
-        'task': 'posts.tasks.currency_value',
-        'schedule': crontab(minute='*/15'),  # change to `crontab(minute=0, hour=0)` if you want it to run daily at midnight 
-    },
+    'send_email': {
+        'task': 'posts.tasks.meet_task_notification',
+        'schedule': crontab(minute=3),  # change to `crontab(minute=0, hour=0)` if you want it to run daily at midnight 
+        },
 #     'test': {
 #         'task': 'celery.test',
 #         'schedule': 10,  # change to `crontab(minute=0, hour=0)` if you want it to run daily at midnight 

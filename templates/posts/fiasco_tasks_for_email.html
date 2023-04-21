@@ -1,0 +1,73 @@
+{% extends 'base_for_email.html' %}
+{% block title %}FIASCO TASK LIST{% endblock %}
+{% block content %}
+{% now "Y-m-d" as todays_date %}
+<input class="form-control" id="myInput" type="text" placeholder="Search..">
+<br>
+<table class="table table-bordered border-primary"
+  id = "table"
+  data-filter-control="true"
+  data-show-search-clear-button="true">
+    <thead class="thead-dark">
+        <tr>
+        <th data-field="EVENT ROOT">EVENT ROT</th>
+        <th data-field=>TOW</th>
+        <th scope="col">SIQ</th>
+        <th scope="col">ITEM</th>
+        <th scope="col">NOTE</th>
+        <th scope="col">DATE</th>
+        <th scope="col">PERSON</th>
+        <th scope="col">DUE DATE</th>
+        <th scope="col">STATUS</th>
+        <th scope="col">ATTACHMENTS</th>
+        </tr>
+    </thead>
+    <tbody id ="myTable">
+      {% for tasks_list in tasks  %}
+      {% if todays_date > tasks_list.completed_date|date:'Y-m-d' and tasks_list.status.task_status_description != "RELEASED" %}
+      <tr class='table-danger'>
+        <td>
+            {{ tasks_list.event_root}}
+        </td>
+        <td>{{ tasks_list.tow.tow_name }}</td>
+        <td>{{ tasks_list.siq }}</td>
+        <td>
+          {{ tasks_list.item.name }}
+        </td>
+        <td>{{ tasks_list.text }}</td>
+        <td>{{ tasks_list.date }}</td>
+        <td>
+            {{ tasks_list.person }}
+        </td>
+        <td>{{ tasks_list.completed_date }}</td>
+        <td>{{ tasks_list.status.task_status_description }}</td>
+        <td>
+          <!--{% if tasks_list.image != "" %}
+          <a href = "{{ tasks_list.image.url }}">
+            download </a>
+            {% endif %} -->
+            download
+        </td> 
+      </tr>
+      {%endif%}
+      {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+
+<script>
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  </script>
+
+<script>
+  $(function() {
+    $('#table').bootstrapTable()
+  })
+</script>

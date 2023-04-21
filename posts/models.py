@@ -6,7 +6,7 @@ from django.db import models
 from posts.constant import (CM, DE, DO, DOEPSEWIS, DOFS, DOMP, DOPWD, DOSTR,
                             DOSTRS, HEAD, LEAD, ME, MELEAD, MEMNG, MEPLANER,
                             OAW, PE, PM, PME, SE, SUPER, TE, VTXPOME, VTXPOMG,
-                            VTXPOMP, VTXPOQA, VTXPOSC, VTXPOSF)
+                            VTXPOMP, VTXPOQA, VTXPOSC, VTXPOSF, PO)
 
 User = get_user_model()
 
@@ -69,6 +69,7 @@ class Profile(models.Model):
         (DOSTRS, 'DOSTRS'),
         (DOPWD, 'DOPWD'),
         (DOMP, 'DOM&P'),
+        (PO, 'PRODUCT ORGANIZATION'),
     ]
     ROLE_OF_CHOISES = [
         (ME, 'ME'),
@@ -346,7 +347,7 @@ class Ebom0000(models.Model):
 
 
 class Item(models.Model):
-    VER=[(i, i) for i in range (100)]
+    VER = [(i, i) for i in range (100)]
     name = models.CharField(
         max_length=100,
         unique=True,
@@ -495,8 +496,8 @@ class Tasks(models.Model):
     class Meta:
         ordering = ['-date']
 
-    def __str__(self):
-        return self.item
+    # def __str__(self):
+    #     return self.item
 
 
 class Task(models.Model):

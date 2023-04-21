@@ -3,22 +3,43 @@
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a 
-          class="nav-link {% if dcpflag %}active{% endif %}"
+          class="nav-link {% if dcpflag %} active {% endif %}"
           href="{% url 'nonconformance:dcp_detail' dcp_detail.id %}">
           {{ dcp_detail.nn_name }}
         </a>
       </li>
-      {% for rpt in rpts %}
-        {% if rpt.dcp_id == dcp_detail.id%}
-      <li class="nav-item">
-        <a
-          class="nav-link {% if rptflag %}active{% endif %}"
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Related RPTs</a>
+        <ul class="dropdown-menu">
+          {% for rpt in rpts %}
+          <li>
+            <a
+              class="dropdown-item"
               href="{% url 'nonconformance:rpt_detail' rpt.id %}">
               {{ rpt.rpt_name }} {{ rpt.rpt_process_status }} {{ rpt.dispatched_to | linebreaks}} 
-        </a> 
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
       </li>
-      {% endif %}
-    {% endfor %}
+      {% if orf_detail %}
+    <li class='nav-item'>
+      <a 
+      class="nav-link {% if orfflag %} active {% endif %}"
+      href="{% url 'nonconformance:orf_detail' orf_detail.id %}">
+      {{ orf_detail.orf_name }}
+    </a>
+  </li>
+  {% endif %}
+  {% if tcp_detail %}
+    <li class="nav-item">
+      <a 
+      class="nav-link {% if tcpflag %} active {% endif %}"
+      href="{% url 'nonconformance:tcp_detail' tcp_detail.id %}">
+      {{ tcp_detail.tdc_name }}
+    </a>
+  </li>
+  {% endif %}
     </ul>
   </div>
 {% endif %}

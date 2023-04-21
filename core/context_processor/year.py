@@ -1,9 +1,5 @@
-import smtplib
-import time
 from datetime import datetime
 
-import requests
-from bs4 import BeautifulSoup
 from django import template
 from django.utils import timezone
 

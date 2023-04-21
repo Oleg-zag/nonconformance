@@ -1,15 +1,15 @@
 {% block content %}
 {% load static %}
 {% load thumbnail %}
-<div class="container p-5 ">
-  <div class="row no-gutters">
+<div class="container">
+  <div class="row">
     <div class="col-3 border bg-white border-dark">
       <div class="p-3 img-center"><img src="{% static 'img/logo.png' %}" width="200" height="70" class="d-inline-block align-top" alt=""></div>
       </div>
-    <div class="col-6 border-top border-bottom bg-wite border-dark text-center">
+    <div class="col-6 p-0 border-top border-bottom border-end bg-wite border-dark text-center">
       <div class="p-3 text-center"><h3 class="text-center"> TECHNICAL EVALUATION <br> REQUEST </bt> </h3> </div>
     </div>
-    <div class="col-3 border-left border-right border-top bg-white border-dark">
+    <div class="col-3 border-top border-end bg-white border-dark">
       <div class="col-12 border-bottom bg-white border-dark">
         <div class="p-3"> No.: {{ rpt_detail.rpt_name }} </div>
       </div>
@@ -19,45 +19,45 @@
     </div>    
   </div>
   <div class="row no-gutters">
-    <div class="col-3 border-left border-bottom border-right bg-white border-dark">
+    <div class="col-3 border-start border-bottom border-end bg-white border-dark">
       <div class"p-3 text-center"> <h6 class='text-center'>Document/Part Name:</h6> 
         {% for part in dcp_detail.part_number.all %}
           <p6 class='text-center'> {{ part.description | linebreaks  }} </p6>
         {% endfor %}
       </div>
     </div>
-    <div class="col-4 border-bottom border-right bg-white border-dark">
+    <div class="col-4 border-bottom border-end bg-white border-dark">
       <div class"p-3 text-center"> <h6 class='text-center'> Aircraft or Program:</h6> </div> 
           <h4 class='text-center'> VRT500 </h4>
       </div>
-    <div class="col-2 border-bottom border-right bg-white border-dark">
+    <div class="col-2 border-bottom border-end bg-white border-dark">
       <div class"p-3 text-center"> <h6 class='text-center'> Applicability </h6> </div>
         {% for msn in dcp_detail.applicability.all %}
           <h4 class='text-center'> {{ msn.msn }} </h4>
         {% endfor %}
       </div>
-      <div class="col-3 border-bottom border-right bg-white border-dark">
+      <div class="col-3 border-bottom border-end bg-white border-dark">
         <div class"p-3 text-center"> <h6 class='text-center'> Drawing </h6> </div>
           {% for dwg in  dcp_detail.part_number.all %}
             <p3 class='text-center'> {{ dwg.title | linebreaks}} </p3>
           {% endfor %}
         </div>
-      <div class="col-2 border-bottom border-left border-right bg-light border-dark">
+      <div class="col-2 border-bottom border-start border-end bg-light border-dark">
         <div class"p-3 text-center"> <h6 class='text-center'>  Dispatched to    </h6> 
         </div>
       </div>
-      <div class="col-5 border-bottom border-right bg-white border-dark">
+      <div class="col-5 border-bottom border-end bg-white border-dark">
         <div class"p-3 text-center"> 
           <div class='text-center'>{{ rpt_detail.dispatched_to.profile }}
           </div>
         </div>
       </div>
-      <div class="col-2 border-bottom border-right bg-light border-dark">
+      <div class="col-2 border-bottom border-end bg-light border-dark">
         <div class"p-3 text-center"> 
           <div class='text-center'> <h6 class='text-center'>  Source document:    </h6> </div>
         </div>
       </div>
-      <div class="col-3 border-bottom border-right bg-white border-dark">
+      <div class="col-3 border-bottom border-end bg-white border-dark">
         <div class"p-3 text-center"> 
           <div class='text-center'>
             <a href="{% url 'nonconformance:dcp_detail' rpt_detail.dcp.id %}">
@@ -65,7 +65,7 @@
           </div>
         </div>
       </div>  
-    <div class="col-12 border-bottom border-right border-left bg-white border-dark">
+    <div class="col-12 border-bottom border-end border-start bg-white border-dark">
         <div class"p-3 text-left"> 
           <div> <h6 class='text-left'>  Description  </h6> </div>
             {{ rpt_detail.description }}
@@ -78,12 +78,12 @@
       </div>
     </div>
     <div class="row no-gutters">
-      <div class="col-2 border-left border-bottom  bg-white border-dark">
+      <div class="col-2 border-start border-bottom  bg-white border-dark">
         <div> <h6 class='text-left'>  Similar previous RPT  </h6> </div>
         <div> <h6 class='text-left'>   </h6> </div>
         <div> <h6 class='text-center'>  N.A.  </h6> </div>
       </div>
-      <div class="col-3 border-left  border-bottom bg-whigt border-dark">
+      <div class="col-3 border-start  border-bottom bg-whigt border-dark">
         <div> <b> <class='text-center'>  OAW:   </b> </div>
         <div> <class='text-center'>  {{ rpt_detail.oaw.user.get_full_name }} </div>
           <div class="col-7  bg-white">
@@ -100,7 +100,7 @@
           {% endthumbnail %}
         </div>
       </div>
-      <div class="col-5 border-left border-right border-bottom  bg-white border-dark">
+      <div class="col-5 border-start border-end border-bottom  bg-white border-dark">
         <div> <h6 class='text-left'>  CVE or DO SPECIALIST </h6> </div>
         <div class='p-3 class text-center'>
           {% thumbnail rpt_detail.do_receipt.signature "200x70" crop="center" upscale=True as im %}
@@ -111,11 +111,11 @@
         <h6 class='text-left'>  Date: {{ rpt_detail.do_date_receipt }}  </h6> </div>
       </div>
       <div class="row no-gutters">
-        <div class="col-8 border-left border-bottom  bg-white border-dark">
+        <div class="col-8 border-start border-bottom  bg-white border-dark">
           <div> <h6 class='text-left'>  Technical Review:  </h6> </div>
           {{ rpt_detail.review_note }}
           </div>
-        <div class="col-4 border-left border-right  bg-white border-dark">
+        <div class="col-4 border-start border-end  bg-white border-dark">
           <div class="col-12  border-bottom  bg-white border-dark">
             <h6 class='text-left'>  Date: {{ rpt_detail.do_date }}  </h6> </div>
             <div class="col-12 bg-white">
@@ -135,19 +135,19 @@
           </div>
         </div>
       <div class="row no-gutters">
-        <div class="col-8 border-bottom border-left bg-white border-dark">
+        <div class="col-8 border-bottom border-start border-end bg-white border-dark">
           <div> <h6 class='text-center'>  Review Status: {{ rpt_detail.rpt_review_status }} </h6> </div>
         </div>
-        <div class="col-4 border-bottom border-left border-right  bg-white border-dark"> 
+        <div class="col-4 border-bottom border-start border-end  bg-white border-dark"> 
         </div>
       </div>
       <div class="row no-gutters">
-          <div class="col-8 border-left border-bottom bg-white border-dark">
+          <div class="col-8 border-start border-end border-bottom bg-white border-dark">
              <h6 class='text-left'>  OAW note:  </h6> 
               {{ rpt_detail.oaw_note }}
           </div>
-          <div class="col-4 border-bottom border-dark">
-              <div class="col-12  border-right border-left bg-white border-dark">  
+          <div class="col-4 border-bottom border-end border-dark">
+              <div class="col-12   bg-white border-dark">  
                 <b> OAW: </b> {{ rpt_detail.hoaw.user.get_full_name }} 
                   <div class="col-6 bg-white">
                     <div class='p-3 class text-center'>
@@ -178,5 +178,5 @@
               <div> <b class='text-left'>  Date of RPT closure:</b> {{ rpt_detail.hoaw_date }} </div>
             </div>
           </div> {% endcomment %}
-    </div>
+        </div>
 {% endblock %}

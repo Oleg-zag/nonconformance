@@ -199,10 +199,11 @@ def tasks_create(request):
             action=tasks.action,
             person=tasks.person,
             status=tasks.status,
-            text=tasks.text,
+            text=(f'{tasks.text}\n'
+                  f'{name}'),
             task_s=tasks,
         )
-        notification(tasks, name)
+        notification(tasks, request.user)
         return redirect('posts:tasks_list')
     return render(request, 'posts/create_task.html', {'form': form})
 
@@ -231,13 +232,13 @@ def task_edit(request, task_id):
         )
         tasks.time_consume = tasks.time_consume + task.time_consume
         tasks.status = task.status
-        tasks.text = task.text
+        tasks.text = (f'{task.text}\n'
+                      f'{name}')
         tasks.person = task.person
         if task.completed_date is None:
             tasks.save(update_fields=[
                 'status',
                 'person',
-                'text',
             ])
             task.task_name = tasks.event_root
             task.tow = tasks.tow
@@ -245,10 +246,12 @@ def task_edit(request, task_id):
             task.action = tasks.action
             task.siq = tasks.siq
             task.task_s = tasks
-            notification(tasks, name)
+            task.text = (f'{task.text}\n'
+                         f'{name}')
             task.save()
+            notification(tasks, request.user)
             tas = Task.objects.all().latest('id')
-            tas.completed_date=tasks.completed_date
+            tas.completed_date = tasks.completed_date
             tas.save(update_fields=[
                 'completed_date'])
             return redirect('posts:tasks_list')
@@ -260,13 +263,15 @@ def task_edit(request, task_id):
                 'text',
                 'completed_date',
             ])
+            task.text = (f'{task.text}\n'
+                      f'{name}')
             task.task_name = tasks.event_root
             task.tow = tasks.tow
             task.item = tasks.item
             task.action = tasks.action
             task.siq = tasks.siq
             task.task_s = tasks
-            notification(tasks, name)
+            notification(tasks, request.user)
             task.save()
             return redirect('posts:tasks_list')
     return render(request, 'posts/edit_task.html', {'form': form})

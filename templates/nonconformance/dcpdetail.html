@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block title %} {{ dcp_detail.nn_name }} ({{ dcp_detail.nn_status }}){% endblock %}
 {% block content %}
+{% include 'nonconformance/includes/switcher_dcp.html' with dcpflag=True %}
+{% include 'nonconformance/includes/dcpdetail_1.html' %}
 {% load thumbnail %}
-{% include 'nonconformance/includes/switcher_dcp.html' %} 
-{% include 'nonconformance/includes/dcpdetail_1.html'%}
 {% endblock %}
  

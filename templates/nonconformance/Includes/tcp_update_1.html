@@ -1,0 +1,305 @@
+{% load user_filters %}
+{% block content %}
+{% comment %} {% load thumbnail %}
+{% load user_filters %}
+<!DOCTYPE html> {% endcomment %}
+{% load static %}
+{% load thumbnail %}
+{% include 'includes/error.html' %}
+<form method="post" action="{% url 'nonconformance:tcp_update' tcp_detail.id %}">
+  {% csrf_token %}   
+  {% comment %} {% include 'includes/header.html' %} {% endcomment %}
+  <div class="container  ">
+    <div class="row no-gutters">
+      <div class="col-3 border bg-white border-dark">
+        <div class="p-3 img-center"><img src="{% static 'img/logo.png' %}" width="210" height="70" class="d-inline-block align-top" alt=""></div>
+        </div>
+      <div class="col-6 border-top border-bottom border-end bg-white border-dark text-center">
+        <div class="p-3 text-center"><h3 class="text-center"> TECHNICAL <br> DOCUMENTATION CHANGE </bt> </h3> </div>
+      </div>
+      <div class="col-3 border-top border-bottom border-end bg-white border-dark">
+        <div class="row no-gutters">
+        <div class="col-8 border-bottom border-end bg-white border-dark">
+          <div class="p-1 text-left"> №: {{ tcp_detail.tdc_name }}</div>
+        </div>
+        <div class="col-4 border-bottom bg-white border-dark">
+          <div class="p-1 text-left"> Rev: A </div>
+        </div>
+      </div>
+      <div class="row no-gutters">
+      <div class="col-12 border-bottom bg-white border-dark">
+        <div class="p-1 text-left"> Date: {{ tcp_detail.date }}</div>
+      </div>
+    </div>
+    <div class="row no-gutters">
+      <div class="col-12 bg-white border-dark">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value={{ form.incorporate }}  incorporated
+          </div>    
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="row no-gutters">
+      <div class="col-6 border-bottom border-start border-end bg-light border-dark">
+        <div class="p-1 text-center"><h6> DOCUMENTS/PART NUMBERS TO CHANGE </h6> </div>
+      </div>
+      <div class="col-6 border-bottom border-start border-end bg-light border-dark">
+        <div class="p-1 text-center"><h6> DOCUMENTS/PART NUMBERS CHANGED / ISSUED </h6> </div>
+      </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-6 border-bottom border-start border-end bg-white border-dark">
+      <div class="row no-gutters">
+        <div class="col-3 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> DOCUMENT NUMBER </div>
+        </div>
+        <div class="col-2 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> REV </div>
+        </div>
+        <div class="col-3 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> DESCRIPTION </div>
+        </div>
+        <div class="col-2 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> PREVIOUS ASSY </div>
+        </div>
+        <div class="col-2 bg-white border-dark">
+          <div class=" fs-6 text-center"> REV </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 border-bottom border-start border-end bg-white border-dark">
+      <div class="row no-gutters">
+        <div class="col-3 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> DOCUMENT NUMBER </div>
+        </div>
+        <div class="col-2 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> REV </div>
+        </div>
+        <div class="col-3 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> DESCRIPTION </div>
+        </div>
+        <div class="col-2 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> PREVIOUS ASSY </div>
+        </div>
+        <div class="col-2 bg-white border-dark">
+          <div class=" fs-6 text-center"> REV </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-6 border-bottom border-start border-end bg-white border-dark">
+      <div class="row no-gutters">
+        <div class="col-3 border-end bg-white border-dark">
+          <div class="p-1 form-"> 
+            {{form.doc_number_to_change|addclass:'form-control'}}
+        </div>
+      </div>
+        <div class="col-2 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> </div>
+        </div>
+        <div class="col-3 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> </div>
+        </div>
+        <div class="col-2 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> </div>
+        </div>
+        <div class="col-2 bg-white border-dark">
+          <div class=" fs-6 text-center"> </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 border-bottom border-start border-end bg-white border-dark">
+      <div class="row no-gutters">
+        <div class="col-3 border-end bg-white border-dark">
+          <div class=" fs-6 text-center">  </div>
+        </div>
+        <div class="col-2 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> </div>
+        </div>
+        <div class="col-3 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> </div>
+        </div>
+        <div class="col-2 border-end bg-white border-dark">
+          <div class=" fs-6 text-center"> </div>
+        </div>
+        <div class="col-2 bg-white border-dark">
+          <div class=" fs-6 text-center"> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-12 border-bottom border-start border-end bg-light border-dark">
+      <div class="text-center"><h6> DESCRIPTION OF THE CHANGE </h6> </div>
+    </div>
+  <div>
+  <div class="row no-gutters">
+    <div class="col-12 border-bottom border-start border-end bg-white border-dark">
+    <div class="form p-1">
+      {{form.description_of_change|addclass:"form-control"}} </div>
+  </div>
+</div>
+  <div class="row no-gutters">
+    <div class="col-12 border-bottom border-start border-end bg-light border-dark">
+      <div class="p-1 text-center"><h6> REASON OF THE CHANGE </h6> </div>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-12 border-bottom border-start border-end bg-white border-dark">
+      <div class="form p-1">
+        {{form.reason_of_change|addclass:"form-control"}} </div>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-12 border-bottom border-start border-end bg-light border-dark">
+      <div class="p-1 text-center"><h6> CLASSIFICATION </h6> </div>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-12 border-bottom border-start border-end bg-white border-dark">
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" value={{ form.organinizational|addclass:'form-control'}} 
+        <div class="text-left p-1"> <h6> ORGANIZATIONAL </h6> </div>
+      </div>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-6 border-bottom border-start border-end bg-white border-dark">
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" value={{form.technical_not_substantial|addclass:'form-control'}} 
+        <div class="p-1 text-left"><h6> TECHNICAL NOT SUBSTANTIAL </h6> </div>
+      </div>
+    </div>
+      <div class="col-6 border-bottom border-end bg-white border-dark">
+        <div class="p-1 text-left"><h6> AFFECTED RPTS: </h6> 
+          {% if tcp_detail.technical_not_substantial is True  %}
+            {% for rpt in rpts %} {{rpt.rpt_name }};&nbsp {% endfor %}
+          {% endif %}
+        </div>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-6 border-bottom border-start border-end bg-white border-dark">
+      <div class="form-check">
+        {% if tcp_detail.technical_not_substantial is False and tcp_detail.organinizational is False  %}
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" checked >
+      {% else %}
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox2" >
+      {% endif %}
+        <div class="p-1 text-left"><h6> TECHNICAL SUBSTANTIAL </h6> </div>
+      </div>
+    </div>
+    <div class="col-3 border-bottom border-end bg-white border-dark">
+      <div class="form-check">
+          <input class="form-check-input" type="checkbox" value={{form.minor}} 
+        <div class="p-1 text-left"><h6> MINOR </h6> </div>
+      </div>
+    <div class="row no-gutters">
+      <div class="col-12 border-top border-bottom bg-white border-dark">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value={{form.major}} 
+        <div class="p-1 text-left"><h6> MAJOR </h6> </div>
+      </div>
+    </div>
+    <div class="row no-gutters">
+      <div class="col-3 bg-white border-dark">
+        <div class="text-left"><h6> FCD MMEL:</h6> </div>
+      </div>
+    <div class="col-9 bg-white border-dark">
+      <div class="form-select">
+        {{ form.fcd_mmel|addclass:'form-control' }}
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="col-3 border-bottom border-end bg-white border-dark">
+  <div class="text-left p-3"> NDC №  </div>  
+</div>
+</div><div class="row no-gutters ">
+  <div class="col-12 border-start border-end border-bottom bg-white border-dark">
+    <div class="row no-gutters">
+      <div class="col-2 bg-white border-white">
+        <div class="text-left"> Note:</div>
+      </div>
+    </div>
+  <div class="p-3 text-left"> {{ form.note|addclass:'form-control' }}</div>
+</div>
+</div><div class="row no-gutters ">
+  <div class="col-12 border-start border-end border-bottom bg-white border-dark">
+    <div class="text-center"> <b> TDC PROCESS STATUS </b>
+      <div class="form-select">
+        {{ form.tcp_process_status|addclass:'form-control' }}
+      </div>
+    </div>
+  </div>
+  </div><div class="row no-gutters ">
+    <div class="col-10 border-start border-bottom bg-white border-dark">
+      <div class="text-center"> <b> COMPAMY APPROVAL AND DECLARATION FOR COMPLINCE: </b>
+        <br> {{tcp_detail.compliance}} </br>
+      </div>
+    </div>
+    <div class="col-2 border-start border-bottom bg-white border-dark">
+    <div class="row no-gutters ">
+      <div class="col-12  border-bottom border-end bg-white border-dark">
+        <div class="text-center"> <b> HDO </b>
+          <br> {% thumbnail tcp_detail.HDO.signature "200x70" crop="center" upscale=True as im %}
+                <img class="card-img my-2" src="{{ im.url }}">
+                {% endthumbnail %}
+          </br>
+          {{ tcp_detail.HDO }}
+        </div>
+      </div>
+      <div class="col-12  border-end bg-white border-dark">
+        <div class="text-center"> Date 
+          <br> {{tcp_detail.hdo_date}}
+          </br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+      <div class="col-md-12 offset-md-6 p-2">
+        <button type="submit" class="btn btn-primary">
+          UPDATE
+        </button>
+      </div>
+    </form>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  {% endblock %}
+
+
+
+<script>
+  $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#myTable tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  </script>
+
+  <script>
+    $(function() {
+      $('#table').bootstrapTable()
+    })
+  </script>

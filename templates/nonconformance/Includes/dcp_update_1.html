@@ -1,0 +1,277 @@
+{% load user_filters %}
+{% block content %}
+{% comment %} {% load thumbnail %}
+{% load user_filters %}
+<!DOCTYPE html> {% endcomment %}
+{% load static %}
+{% load thumbnail %}
+{% include 'includes/error.html' %}
+<form method="post" action="{% url 'nonconformance:dcp_update' dcp_detail.id %}">
+  {% csrf_token %}   
+  {% comment %} {% include 'includes/header.html' %} {% endcomment %}
+  <div class="container ">
+    <div class="row no-gutters">
+      <div class="col-3 border bg-light border-dark">
+        <div class="p-3 img-center"><img src="{% static 'img/logo.png' %}" width="210" height="70" class="d-inline-block align-top" alt=""></div>
+      </div>
+      <div class="col-7 border bg-light border-dark text-center">
+        <div class="p-3 text-center"><h3 class="text-center"> DESIGN CHANGE PROPOSAL <br> FOR NOT APPROVED DATA </bt> </h3> </div>
+      </div>
+      <div class="col-2 border bg-light border-dark">
+        <div class="p-3"> Page:</div>
+      </div>
+    </div>
+    <div class="row no-gutters">
+      <div class="col-12 border bg-secondary border-dark text-center">
+        <div class="p-1 text-center"> <h5 class="text-center"> REPORTING ORGANIZATION </h5> </div>
+      </div>
+    </div>
+    <div class="row no-gutters">
+      <div class="col-1 border bg-light border-dark">
+        <div class="p-1 text-center"> Drawing <br> Part Number </bt> </div>
+      </div>
+      <div class="col-2 border bg-white border-dark">
+        <div class="p-3 text-center">
+        {% for item in dcp_detail.part_number.all %}
+          <lu>{{item.title}}</lu>
+        {% endfor %}
+      </div> 
+    </div>
+    <div class="col-9 bg-white">
+      <div class="row no-gutters">
+        <div class="col-2 border bg-light border-dark">
+          <div class="p-3 text-center"> Description </div>
+        </div>
+        <div class="col-6 border bg-white border-dark">
+          <div class="p-3 text-center"> 
+            {% for item in dcp_detail.part_number.all %}
+              <lu>{{item.description}}</lu>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-1 border bg-light border-dark">
+          <div class="p-3 text-center"> Doc №: </div>
+        </div>
+        <div class="col-3 border bg-white border-dark">
+          <div class="p-3 text-center"> {{ dcp_detail.nn_name }} </div>
+        </div>  
+      </div>
+      <div class="row no-gutters">
+        <div class="col-2 border bg-light border-dark">
+          <div class="p-1 text-center"> Applicability </div>
+        </div>
+        <div class="col-6 border bg-wight border-dark">
+          <div class="p-3 text-center">  
+            {% for item in dcp_detail.applicability.all %}
+              {{item.msn}} {{ " "}}
+            {% endfor %}
+          </div>
+        </div>
+        <div class="col-1 border bg-light border-dark">
+          <div class="p-1 text-center"> Date: </div>
+        </div>
+        <div class="col-3 border bg-white border-dark">
+          <div class="p-3 text-center"> {{ dcp_detail.applicant_date }} </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-3 border bg-light border-dark"> 
+        <div class="p-3 text-center">Reason:</div>
+      </div>
+      <div class="col-9 border bg-white border-dark"> 
+        <div class="p-3 text-center"> {{ dcp_detail.reason }}</div>
+      </div> 
+    </div>
+    <div class="row no-gutters ">
+      <div class="col-12 border bg-white border-dark">
+        <div class="row no-gutters">
+          <div class="col-4 border bg-light border-dark">
+            <div class="p-3 text-center"> Description of change:</div>
+          </div>
+        </div>
+        <div class="p-3 text-left"> {{ dcp_detail.description_of_change }}</div>
+        <div class="p-3 text-center">
+          {% thumbnail dcp_detail.description_of_change_image "960x339" crop="center" upscale=True as im %}
+            <img class="card-img my-2" src="{{ im.url }}">
+          {% endthumbnail %}
+        </div>
+      </div>
+    </div>
+      <div class="row no-gutters ">
+        <div class="col-12 border bg-white border-dark">
+          <div class="row no-gutters">
+            <div class="col-4 border bg-light border-dark">
+              <div class="p-3 text-center"> Solution:</div>
+            </div>
+          </div>
+          <div class="p-3 text-left"> {{ dcp_detail.solutions }}</div>
+        </div>
+      </div>
+        <div class="row no-gutters">
+          <div class="col-2 border bg-light border-dark">
+            <div class="p-3 text-center"> Applicant:</div>
+          </div>
+          <div class="col-4 border bg-white border-dark">
+            <div class="p-3 text-center"> {{ dcp_detail.applicant.user.first_name }} 
+              {{ dcp_detail.applicant.user.last_name }}  Role: {{dcp_detail.applicant.role }}
+            </div>
+          </div>
+            <div class="col-2 border bg-white border-dark">
+              <div class="p-3 text-center">
+                {% thumbnail dcp_detail.applicant.user.profile.signature "200x70" crop="center" upscale=True as im %}
+                  <img class="card-img my-2" src="{{ im.url }}">
+                {% endthumbnail %}
+              </div>
+            </div>
+            <div class="col-1 border bg-light border-dark">
+              <div class="p-1 text-center"> Date: </div>
+            </div>
+            <div class="col-3 border bg-white border-dark">
+              <div class="p-3 text-center"> {{ dcp_detail.applicant_date }} </div>
+            </div>
+          </div>
+    <div class="row no-gutters">
+      <div class="col-12 border bg-secondary border-dark">
+        <div class="p-1 text-center"> <h5 class="text-center"> DESIGN ORGANIZATION </h5> </div>
+      </div>
+      <div class="col-2 border bg-white border-dark">
+        <div class="p-1 text-center"> 
+          <a href="{% url 'nonconformance:rpt_create' dcp_detail.id %}"> </a>
+            Impacted Areas proposal 
+        </div>
+      </div>
+      <div class="col-8 border bg-white border-dark">
+        <div class="p-3 text-center">
+          {% for rpt in rpts %}
+            {{ rpt.dispatched_to.profile.department }}
+          {% endfor %}
+           </div>
+      </div>
+      <div class="col-2 border bg-white border-dark">
+        {% if dcp_detail.nn_status.nn_status == "RPT DISPATCHED" %}
+        <div class="p-3 text-center">
+          {% thumbnail cdo.signature "200x70" crop="center" upscale=True as im %}
+            <img class="card-img my-2" src="{{ im.url }}">
+          {% endthumbnail %}
+        </div>
+        {% endif %}
+        <div class="p-3 text-center"> Signature</div>
+      </div>
+        <div class="col-12 border bg-white border-dark">
+          <div class="row no-gutters">
+            <div class="col-4 border bg-light border-dark">
+              <div class="p-3 text-center"> DOA Decision:</div>
+            </div>
+          </div>
+          <div class="form-text p-3 "> 
+            {{form.doa_decision|addclass:'form-control' }} </div>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="col-4 border bg-light border-dark">
+            <div class="p-3 text-center"> REQUEST EVALUATION:</div>
+          </div>
+          <div class="col-8 border bg-white border-dark">
+            <div class="form-select"> 
+              {{form.request_evaluation|addclass:'form-control' }} </div>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="col-12 border bg-light border-dark">
+             <div class='p-3 text-center'> Technical Evaluations (RPT) associated </div>
+          </div>
+          <div class="col-12 border bg-white border-dark">
+            <div class="p-3 text-center"> RPT № :
+              {% for rpt in rpts %}
+                {{ rpt.rpt_name  }}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <div class="row no-gutters">
+          <div class="col-4 border bg-light border-dark">
+            <div class="p-3 text-center"> OAW </div>
+          </div>
+          <div class="col-2 border bg-white border-dark">
+            <div class="p-3 text-left"> Signature: </div>
+          </div> 
+          <div class="col-2 border-bottom bg-white border-dark">
+            <div class="text-center p-3 ">
+              {% thumbnail dcp_detail.oaw.signature "200x70" crop="center" upscale=True as im %}
+                <img class="card-img my-2" src="{{ im.url }}">
+              {% endthumbnail %}
+             </div>  
+            </div>       
+          <div class="col-4 border bg-light border-dark">
+            <div class="p-3 text-center"> Date: {{ dcp_detail.oaw_date }} </div>
+          </div> 
+        </div>
+        {% if dcp_detail.annex != "" %}
+        <div class="row no-gutters">
+          <div class="col-12 border bg-light border-dark">
+            <div class="p-3 text-center"> ANNEX: <a href = "{{ task_detail.annex.url }}">
+              DOWNLOAD </a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+        {% if dcp_detail.nn_status == "SENT BACK" %}
+        <div class="row no-gutters p-0">
+          <div class="p-3 text-center"> 
+            {% for el in comments %} 
+              Commets: {{ el.comment }}
+            {% endfor%}
+         </div>
+        {% endif %}
+      </div>
+    </div>
+ 
+    {% comment %} <div class="row no-gutters p-3"> 
+      {% if dcp_detail.nn_status == "INITIATED" %}
+      <div class="col-2">
+        <a href="{% url 'nonconformance:send_back' dcp_detail.id %}"> 
+        <button type="submit" class="btn btn-primary btn-lg"> Send Back </button></a>
+      </div>
+      {% endif %}
+      {% if dcp_detail.nn_status == "SENT BACK" %}
+      <div class="col-2">
+        <a href="{% url 'nonconformance:dcp_edit' dcp_detail.id %}"> 
+        <button type="submit" class="btn btn-primary btn-lg"> Modify DCP </button></a>
+      </div>
+      {% endif %}
+      {% if request.user.profile.role == "HEAD" or request.user.profile.role == "OFFICE HEAD" or request.user.profile.department == 'OFFICE OF AIRWORTHINESS' and dcp_detail.nn_status is not "SENT BACK" %}     
+      <div class="col-2">
+        <a href="{% url 'nonconformance:rpt_create' dcp_detail.id %}">
+        <button type="submit" class="btn btn-primary btn-lg">Assign to</button></a>
+      </div>
+      <div class="col-2">
+        <a href="#">
+        <button type="submit" class="btn btn-primary btn-lg">Accept</button></a>
+      </div>
+      <div class="col-2">
+        <a href="#">
+        <button type="submit" class="btn btn-primary btn-lg">Reject</button></a>
+      </div>
+      <div class="col-2">
+        <a href="#">
+        <button type="submit" class="btn btn-primary btn-lg">Close</button></a>
+      </div>
+    </div> 
+    {% endif %} {% endcomment %}
+            {% comment %} <div class="container p-5 ">
+              <div class="row no-gutters">
+                <div class="col-12 border bg-light border-dark">
+                  <div class="p-3 img-center"><img src="{{dcp_detail.annex.url}}"  class="d-inline-block align-top" alt=""></div>
+                </div>
+              </div>
+            </div> {% endcomment %}
+            <div class="col-md-12 offset-md-6 p-2">
+              <button type="submit" class="btn btn-primary">
+                CLOSE DCP
+              </button>
+            </div>
+          </form>
+  {% endblock %}

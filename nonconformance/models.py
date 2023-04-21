@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.forms import CharField
 
 from posts.models import Ebom0000, Profile, Prototype
 
@@ -25,10 +26,18 @@ SENTFORDEREVIEW = 'SENT FOR DE REVIEW'
 RPTRECEVEIDBYDE = 'RPT RECEIVED BY DE/CVE'
 READYFORCLOSURE = 'SENT FOR OAW REVIEW'
 CLOSURE = 'CLOSURE'
-RR = 'READY FOR RPT'
+RR = 'READY FOR RPT DO EVALUATION'
 RD = 'RPT DISPATCHED'
 RC = 'RPT CLOSED'
 SB = 'SEND BACK'
+PR = 'PREPARED'
+AP = 'APPROVED'
+ORFPP = 'ORF PREPARED'
+ORFAP = 'ORF APPROVED'
+TDCPP = 'TDC PREPARED'
+TDCAP = 'TDC APPROVED'
+RPTDO = 'RPT DO EVALUATED'
+RFD = 'READY FOR DIAP'
 REASON_LIST = [
     (AW, 'Airworthiness'),
     (FI, 'Functional improvement'),
@@ -42,14 +51,24 @@ REQUEST_EVALUATION = [
     (RJ, 'REJECTED'),
     (AC, 'ACCEPTED'),
 ]
+ORF_PROCESS_STATUS = [
+    (PR, 'PREPARED'),
+    (AP, 'APPROVED'),
+]
 NONCONFORMANCE_STATUS = [
     (SB, 'SENT BACK'),
-    (RC, 'RPTs CLOSED'),
-    (RD, 'RPTs DISPATCHED'),
-    (RR, 'READY FOR RPT'),
     (IN, 'INITIATED'),
+    (RR, 'READY FOR RPT DO EVALUATION'),
+    (RD, 'RPTs DISPATCHED'),
+    (RPTDO, 'RPT DO EVALUATED'),
+    (RC, 'RPTs CLOSED'),
+    (ORFPP, 'ORF PREPARED'),
+    (ORFAP, 'ORF APPROVED'),
+    (TDCPP, 'TDC PREPARED'),
+    (TDCAP, 'TDC APPROVED'),
     (OP, 'OPENED'),
     (CL, 'CLOSED'),
+    (RFD, 'READY FOR DIAP'),
 ]
 RPT_PROCESS_STATUS =[
     (DISPATCHED, 'DISPATCHED'),
@@ -90,7 +109,7 @@ class PRTreviewStatus(models.Model):
 
 class NNstatus(models.Model):
     nn_status = models.CharField(
-        max_length=20,
+        max_length=30,
         null=False,
         blank=False,
         choices=NONCONFORMANCE_STATUS,
@@ -162,7 +181,7 @@ class DCP(models.Model):
     request_evaluation = models.CharField(
         max_length=100,
         null=True,
-        blank=True,
+        blank=False,
         choices=REQUEST_EVALUATION,
     )
     oaw = models.ForeignKey(
@@ -172,11 +191,18 @@ class DCP(models.Model):
         null=True,
         related_name='o_a_w',
     )
+    applicant_date = models.DateField(
+        auto_now_add=True,
+    )
+    oaw_date = models.DateField(
+        blank=True,
+        null=True,
+    )
     annex = models.FileField(
         upload_to='posts/',
         blank=True,
     )
-
+    
 
 class NN(models.Model):
     nn_name = models.CharField(max_length=20)
@@ -471,4 +497,223 @@ class OtherRerason(models.Model):
         max_length=20,
         blank=True,
         null=True,
+    )
+
+
+class DocNumberToChange(models.Model):
+    doc_number = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+    rev = models.CharField(
+        max_length=10,
+        blank=True,
+    )
+    description = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+    previous_assy = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+    prev_rev = models.CharField(
+        max_length=10,
+        blank=True,
+    )
+
+
+class DocNumberChanged(models.Model):
+    doc_number = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+    rev = models.CharField(
+        max_length=10,
+        blank=True,
+    )
+    description = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+    previous_assy = models.CharField(
+        max_length=50,
+        blank=True,
+    )
+    prev_rev = models.CharField(
+        max_length=10,
+        blank=True,
+    )
+
+
+class TDC(models.Model):
+    INCORPORATED = 'INCORPORATED'
+    NOTINCORPORATED = 'NOTINCORPORATED'
+    INC_CHOISE = [
+        (INCORPORATED, 'INCORPORATED'),
+        (NOTINCORPORATED, 'NOTINCORPORATED'),
+    ]
+    NA = 'N.A'
+    MINOR = 'MINOR'
+    MAJOR = 'MAJOR'
+    FCD_MMEL_CHOISE = [
+        (MINOR, 'MINOR'),
+        (MAJOR, 'MAJOR'),
+    ]
+    tdc_name = models.CharField(max_length=25)
+    tdc_rev = models.CharField(max_length=25)
+    date = models.DateField(
+        'Date',
+        auto_now_add=True,
+    )
+    incorporate = models.BooleanField(
+        default=False
+    )
+    doc_number_to_change = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+    doc_number_changed = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+    description_of_change = models.TextField(
+        blank=True,
+        null=True,
+    )
+    reason_of_change = models.TextField(
+        blank=True,
+        null=True,
+    )
+    organinizational = models.BooleanField(
+        default=False,
+    )
+    organinizational_text = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True,
+    )
+    technical_not_substantial = models.BooleanField(
+        default=True,
+    )
+    minor = models.BooleanField(
+        default=False,
+    )
+    major = models.BooleanField(
+        default=False,
+    )
+    fcd_mmel = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+        choices=FCD_MMEL_CHOISE,
+    )
+    note = models.TextField(
+        blank=True,
+        null=True
+    )
+    prepared_oaw = models.ForeignKey(
+        Profile,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name='app_pre_oaw',
+    )
+    date_oaw = models.DateField(
+        blank=True,
+        null=True,       
+    )
+    approved_hoaw = models.ForeignKey(
+        Profile,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name='app_hoaw',
+    )
+    date_hoaw = models.DateField(
+        blank=True,
+        null=True,       
+    )
+    HDO = models.ForeignKey(
+        Profile,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name='tdc',
+    )
+    hdo_date = models.DateField(
+        blank=True,
+        null=True,       
+    )
+    compliance = models.TextField(
+        blank=True,
+        null=True
+    )
+    dcp = models.ForeignKey(
+        DCP,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name='tds_rpt',
+    )
+    tcp_process_status = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=ORF_PROCESS_STATUS,
+    )
+
+
+class ORF(models.Model):
+    orf_name = models.CharField(max_length=25)
+    orf_rev = models.CharField(max_length=25)
+    date = models.DateField(
+        'Date',
+        auto_now_add=True,
+    )
+    dcp = models.ForeignKey(
+        DCP,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name='dcp_orf',
+    )
+    nn = models.ForeignKey(
+        NN,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name='nn_orf',
+    )
+    orf_evaluation_status = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=REQUEST_EVALUATION,
+    )
+    description = models.TextField(
+        null=True,
+        blank=True,
+    )
+    prepared_oaw = models.ForeignKey(
+        Profile,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name='oaw_orf',
+    )
+    HDO = models.ForeignKey(
+        Profile,
+        models.DO_NOTHING,
+        blank=True,
+        null=True,
+        related_name='hoaw_orf',
+    )
+    orf_process_status = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        choices=ORF_PROCESS_STATUS,
     )

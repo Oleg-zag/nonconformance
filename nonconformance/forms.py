@@ -1,8 +1,10 @@
+from tkinter import Radiobutton
 from django import forms
 from django.contrib.admin import widgets
 from django.contrib.admin.widgets import AdminDateWidget
 
 from .models import DCP, RPT, Comment, NNstatus, OtherRerason
+from .models import TDC, ORF
 
 
 class DCPForm(forms.ModelForm):
@@ -182,3 +184,54 @@ class OtherForm(forms.ModelForm):
         labels = {
             'reason': 'define a reason of DCP',
         }
+
+
+class TDCForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = TDC
+        fields = ('incorporate', 'doc_number_to_change',
+                  'description_of_change', 'reason_of_change',
+                  'organinizational', 'technical_not_substantial',
+                  'minor', 'major', 'fcd_mmel', 'note', 'tcp_process_status',
+                  )
+        lebels = {'incorporate': 'incorporate or NOT',
+                  'doc_number_to_change': 'document/part numbers to change',
+                  'doc_number_changed': 'document/part numbers changed/issued',
+                  'description_of_change': 'desxcription of change',
+                  'reason_of_change': 'reason of change',
+                  'organinizational': 'organizational',
+                  'technical_not_substantional': 'technical not substantional',
+                  'minor': 'minor',
+                  'major': 'major',
+                  'fcd_mmel': 'fcd mmel',
+                  'note': 'note',
+                  }
+        widgets = {
+            'incorporate': forms.CheckboxInput(attrs={'type': 'checkbox'}),
+            'fcd_mmel': forms.Select(attrs={'type': 'checkbox'}),
+        }
+
+
+class ORFForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = ORF
+        fields = ('orf_evaluation_status',
+                  'description',
+                  'orf_process_status')
+
+
+class DCPUpdateForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = DCP
+        fields = ('doa_decision',
+                  'request_evaluation',
+                  )

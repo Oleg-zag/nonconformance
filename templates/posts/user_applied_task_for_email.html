@@ -1,0 +1,85 @@
+{% extends 'base_for_email.html' %}
+{% block content %}
+{% load thumbnail %}
+<center class="wrapper">
+  <div class="container py-5">
+    <h1> PLEASE PLANE WORKING FOLLOWING TASKS </h1>
+    <div class="table-responsive">
+      <table class="table3" width="100%">
+      <thead class="thead-dark">
+          <tr>
+          <th scope="col">EVENT ROOT</th>
+          <th scope="col">TOW</th>
+          <th scope="col">SIQ</th>
+          <th scope="col">ITEM</th>
+          <th scope="col">NOTE</th>
+          <th scope="col">DATE</th>
+          <th scope="col">PERSON</th>
+          <th scope="col">DUE DATE</th>
+          <th scope="col">STATUS</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for tasks_list in tasks_inwork  %}
+            <td>
+                {{ tasks_list.event_root}}
+            </td>
+            <td>{{ tasks_list.tow.tow_name }}</td>
+            <td>{{ tasks_list.siq }}</td>
+            <td>
+              {{ tasks_list.item.name }}
+            </td>
+            <td>{{ tasks_list.text }}</td>
+            <td>{{ tasks_list.date }}</td>
+            <td>{{ tasks_list.person }}</td>
+            <td>{{ tasks_list.completed_date }}</td>
+            <td>{{ tasks_list.status.task_status_description }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    {% if tasks_fiasko.count != 0 %}
+    <h1> FOLLOWING TASKS ASSIGNED TO YOU MISSED THE DUE DATE </h1>
+    <table class="table4" width="100%">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">EVENT ROOT</th>
+            <th scope="col">TOW</th>
+            <th scope="col">SIQ</th>
+            <th scope="col">ITEM</th>
+            <th scope="col">NOTE</th>
+            <th scope="col">DATE</th>
+            <th scope="col">PERSON</th>
+            <th scope="col">DUE DATE</th>
+            <th scope="col">STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tasks_list in tasks_fiasco  %}
+              <td>
+                  {{ tasks_list.event_root}}
+              </td>
+              <td>{{ tasks_list.tow.tow_name }}</td>
+              <td>{{ tasks_list.siq }}</td>
+              <td>
+                {{ tasks_list.item.name }}
+              </td>
+              <td>{{ tasks_list.text }}</td>
+              <td>{{ tasks_list.date }}</td>
+              <td>{{ tasks_list.person }}</td>
+              <td>{{ tasks_list.completed_date }}</td>
+              <td>{{ tasks_list.status.task_status_description }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+    </center>
+  <center class="wrapper">
+  <h2> FROM  {{ tasks.count }} TASKS {{ tasks_fiasco.count }} ARE MISSED DUE DATE  </h2>
+  <h1> <b> IT's FIASCO, BRO </b>
+  </center>
+  <center class="wrapper">
+    <img src = "https://is2-ssl.mzstatic.com/image/thumb/Purple128/v4/78/a1/cd/78a1cd6d-9fcf-a86f-73e9-79ea852c004a/source/512x512bb.jpg" width="125" height="125" class="d-inline-block align-top" alt="">
+  </center>
+    {% endif %}
+{% endblock %}

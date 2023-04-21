@@ -5,11 +5,11 @@
 {% load static %}
 {% load thumbnail %}
   {% comment %} {% include 'includes/header.html' %} {% endcomment %}
-  <div class="container p-5 ">
+  <div class="container ">
     <div class="row no-gutters">
       <div class="col-3 border bg-light border-dark">
         <div class="p-3 img-center"><img src="{% static 'img/logo.png' %}" width="210" height="70" class="d-inline-block align-top" alt=""></div>
-        </div>
+      </div>
       <div class="col-7 border bg-light border-dark text-center">
         <div class="p-3 text-center"><h3 class="text-center"> DESIGN CHANGE PROPOSAL <br> FOR NOT APPROVED DATA </bt> </h3> </div>
       </div>
@@ -18,10 +18,10 @@
       </div>
     </div>
     <div class="row no-gutters">
-    <div class="col-12 border bg-secondary border-dark text-center">
-      <div class="p-1 text-center"> <h5 class="text-center"> REPORTING ORGANIZATION </h5> </div>
+      <div class="col-12 border bg-secondary border-dark text-center">
+        <div class="p-1 text-center"> <h5 class="text-center"> REPORTING ORGANIZATION </h5> </div>
+      </div>
     </div>
-  </div>
     <div class="row no-gutters">
       <div class="col-1 border bg-light border-dark">
         <div class="p-1 text-center"> Drawing <br> Part Number </bt> </div>
@@ -71,15 +71,16 @@
         </div>
       </div>
     </div>
-    <div class="row no-gutters p-0">
+  </div>
+    <div class="row">
       <div class="col-3 border bg-light border-dark"> 
         <div class="p-3 text-center">Reason:</div>
       </div>
       <div class="col-9 border bg-white border-dark"> 
         <div class="p-3 text-center"> {{ dcp_detail.reason }}</div>
       </div> 
-  </div>
-    <div class="row no-gutters p-0">
+    </div>
+    <div class="row no-gutters ">
       <div class="col-12 border bg-white border-dark">
         <div class="row no-gutters">
           <div class="col-4 border bg-light border-dark">
@@ -94,7 +95,7 @@
         </div>
       </div>
     </div>
-      <div class="row no-gutters p-0">
+      <div class="row no-gutters ">
         <div class="col-12 border bg-white border-dark">
           <div class="row no-gutters">
             <div class="col-4 border bg-light border-dark">
@@ -103,7 +104,8 @@
           </div>
           <div class="p-3 text-left"> {{ dcp_detail.solutions }}</div>
         </div>
-        <div class="row no-gutters p-0">
+      </div>
+        <div class="row no-gutters">
           <div class="col-2 border bg-light border-dark">
             <div class="p-3 text-center"> Applicant:</div>
           </div>
@@ -125,7 +127,8 @@
             <div class="col-3 border bg-white border-dark">
               <div class="p-3 text-center"> {{ dcp_detail.applicant_date }} </div>
             </div>
-    <div class="row no-gutters p-0">
+          </div>
+    <div class="row no-gutters">
       <div class="col-12 border bg-secondary border-dark">
         <div class="p-1 text-center"> <h5 class="text-center"> DESIGN ORGANIZATION </h5> </div>
       </div>
@@ -152,23 +155,24 @@
         {% endif %}
         <div class="p-3 text-center"> Signature</div>
       </div>
-    </div>
         <div class="col-12 border bg-white border-dark">
-          <div class="row no-gutters p-0">
+          <div class="row no-gutters">
             <div class="col-4 border bg-light border-dark">
               <div class="p-3 text-center"> DOA Decision:</div>
             </div>
           </div>
-          <div class="p-3 text-left"> </div>
+          <div class="p-3 text-left"> {{ dcp_detail.doa_decision }} </div>
         </div>
-        <div class="row no-gutters p-0">
+      </div>
+        <div class="row no-gutters">
           <div class="col-4 border bg-light border-dark">
             <div class="p-3 text-center"> REQUEST EVALUATION:</div>
           </div>
           <div class="col-8 border bg-white border-dark">
-            <div class="p-3 text-center"> {{ request_evaluation }}</div>
+            <div class="p-3 text-center"> {{ dcp_detail.request_evaluation }}</div>
           </div>
-        <div class="row no-gutters p-0">
+        </div>
+        <div class="row no-gutters">
           <div class="col-12 border bg-light border-dark">
             <div class="p-3 text-center"> Technical Evaluations (RPT) associated </div>
           </div>
@@ -180,19 +184,26 @@
             </div>
           </div>
         </div>
-        <div class="row no-gutters p-0">
+        <div class="row no-gutters">
           <div class="col-4 border bg-light border-dark">
             <div class="p-3 text-center"> OAW </div>
           </div>
-          <div class="col-4 border bg-white border-dark">
+          <div class="col-2 border-bottom  bg-white border-dark">
             <div class="p-3 text-left"> Signature: </div>
-          </div>          
+          </div> 
+          <div class="col-2 border-bottom bg-white border-dark">
+            <div class="text-center p-3 ">
+              {% thumbnail dcp_detail.oaw.signature "200x70" crop="center" upscale=True as im %}
+                <img class="card-img my-2" src="{{ im.url }}">
+              {% endthumbnail %}
+             </div>  
+            </div>  
           <div class="col-4 border bg-light border-dark">
             <div class="p-3 text-center"> Date: {% now "jS F Y" %} </div>
           </div> 
         </div>
         {% if dcp_detail.annex != "" %}
-        <div class="row no-gutters p-0">
+        <div class="row no-gutters">
           <div class="col-12 border bg-light border-dark">
             <div class="p-3 text-center"> ANNEX: <a href = "{{ task_detail.annex.url }}">
               DOWNLOAD </a>

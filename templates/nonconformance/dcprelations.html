@@ -2,6 +2,6 @@
 {% block title %} DCP RELATIONS {% endblock %}
 {% block content %}
 {% load thumbnail %}
-{% include 'nonconformance/includes/switcher_dcp.html' %}
+{% include 'nonconformance/includes/switcher_dcp.html' with dcpflag=True %}
 {% include 'nonconformance/includes/dcpdetail_1.html' %}
 {% endblock %}

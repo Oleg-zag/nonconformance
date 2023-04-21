@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %} {{ tcp_detail.tcp_name }} {{ 'TCD RELATIONS' }} {% endblock %}
+{% block content %}
+{% load thumbnail %}
+{% include 'nonconformance/includes/switcher_dcp.html' with tcpflag=True %}
+{% include 'nonconformance/includes/tcp_update_1.html' %}
+{% endblock %}

@@ -136,7 +136,12 @@ STATICFILES_DIRS = [
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_BACKEND = 'Any'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "app.debugmail.io"
+EMAIL_HOST_USER = "e3eadb5b-ed3a-4190-9aa5-566fbba84598"
+EMAIL_HOST_PASSWORD = "1786bcf9-635c-42c0-bbd5-1f927c2a8b55"
+EMAIL_PORT = "25"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 CSRF_FAILURE_VIEW = 'core.views.csrf_failure'
 

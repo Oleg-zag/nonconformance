@@ -2,6 +2,9 @@ from meet.celery import app
 from .models import Currency
 import requests
 from bs4 import BeautifulSoup
+from .models import User, Tasks
+from django.core.mail import send_mail
+from posts.utils import task_user_application, task_user_application_2
 
 
 @app.task
@@ -29,3 +32,13 @@ def currency_value():
         currency_eur=convert_evro[0].text,
         currency_cnr=convert_cny[0].text,
     )
+
+
+@app.task
+def meet_task_notification():
+    users = User.objects.all()
+    for user in users:
+        tasks = Tasks.objects.filter(person=user)
+        if tasks.count() > 0:
+            # task_user_application(user, tasks)
+            task_user_application_2(user, tasks)
