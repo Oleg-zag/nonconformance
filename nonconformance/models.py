@@ -127,6 +127,13 @@ class DCP(models.Model):
         null=False,
         blank=False,
     )
+    constrained_dcp = models.ForeignKey(
+        'self',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name='related_dcp',
+    )
     part_number = models.ManyToManyField(
         Ebom0000,
         null=True,
@@ -202,7 +209,9 @@ class DCP(models.Model):
         upload_to='posts/',
         blank=True,
     )
-    
+    def __str__(self):
+        return self.nn_name
+
 
 class NN(models.Model):
     nn_name = models.CharField(max_length=20)

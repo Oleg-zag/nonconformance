@@ -21,7 +21,7 @@ class DCPForm(forms.ModelForm):
         model = DCP
         fields = (
             'part_number',
-            'applicability', 'reason', 'description_of_change',
+            'applicability', 'reason', 'constrained_dcp', 'description_of_change',
             'description_of_change_image',
             'solutions', 'annex',
         )
@@ -29,6 +29,7 @@ class DCPForm(forms.ModelForm):
             'part_number': 'Part Number',
             'reason': 'Reason',
             'description_of_change': 'Description of change',
+            'constrained_dcp': 'Constrained DCP',
             'description_of_change_image': 'Description Image',
             'solutions': 'Solution / Corretive Action Proposed / Impacted areas',
             'annex': 'Annex',

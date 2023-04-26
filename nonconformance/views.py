@@ -212,11 +212,11 @@ def dcp_process(request, dcp_id):
         name_syllable_2 = "DO"
     else:
         name_syllable_2 = company_name.shot_name
-    name_syllable_2 = Company.objects.get(name=company_name).shot_name
     name_syllable_3 = timezone.now().strftime("%y")
     name_syllable_1_2_3 = f'{name_syllable_1}-{name_syllable_2}-{name_syllable_3}'
-    nn_name_count = len(DCP.objects.filter(
-        nn_name__startswith=name_syllable_1_2_3).exclude(nn_name__contains="XXX")) + 1
+    # nn_name_count = len(DCP.objects.filter(
+    #     nn_name__startswith=name_syllable_1_2_3).exclude(nn_name__contains="XXX")) + 1
+    nn_name_count = len(DCP.objects.exclude(nn_name__contains="XXX")) + 1
     name = f'{name_syllable_1_2_3}-{nn_name_count:03}'
     dcp_detail.nn_name = name
     dcp_detail.nn_status = NNstatus.objects.get(nn_status="READY FOR DIAP")

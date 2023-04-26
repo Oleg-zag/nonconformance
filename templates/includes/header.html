@@ -214,7 +214,7 @@
                 {% if orf_detail.orf_process_status != 'APPROVED' %}
                   <li class="nav-item">
                     <a class="nav-link {% if view_name  == 'nonconformance:orf_update' %} active{% endif %}"
-                      href="{% url 'nonconformance: orf_update' orf_detail.id %}">
+                      href="{% url 'nonconformance:orf_update' orf_detail.id %}">
                       ORF UPDATE 
                     </a>
                   </li>

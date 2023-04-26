@@ -15,6 +15,7 @@
         <th scope="col">REQUEST EVALUATION</th>
         <th scope="col">DATE</th>
         <th scope="col">RPT LIST</th>
+        <th scope="col">RELATED DCP</th>
         </tr>
     </thead>
     <tbody id ="myTable">
@@ -38,6 +39,8 @@
               {{ rpt.rpt_name }} {{ rpt.rpt_process_status.rpt_process_status }} {{ rpt.dispatched_to | linebreaks }}
             {% endif %}
           {% endfor %}
+        </td>
+        <td>{{ nn_list.constrained_dcp }}
         </td>
       </tr>
       {% endfor %}
